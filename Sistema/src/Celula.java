@@ -8,6 +8,11 @@ public class Celula<E>{
         setProximaCelula(null);
     }
 
+    public Celula(E item){
+        this.item = item;
+        setProximaCelula(null);
+    }
+
     public void setProximaCelula(Celula<E> proximCelula) {
         this.proximaCelula = proximCelula;
     }
