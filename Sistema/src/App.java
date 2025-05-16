@@ -45,6 +45,9 @@ public class App {
                     System.out.println("Paciente cadastrado com sucesso!");
                     break;
 
+                    case 2: filaDePacientes.imprime();
+                    break;
+
                 default:
                     break;
             }

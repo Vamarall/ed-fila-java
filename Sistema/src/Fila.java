@@ -1,62 +1,68 @@
 import java.util.NoSuchElementException;
 
 public class Fila<E> {
-
-    private Celula<E> tras;
     private Celula<E> frente;
-    private Integer tamanho;
+    private Celula<E> tras;
+    private int tamanho;
 
     public Fila() {
-        // Instanciando celula sentinela (Celula auxiliar)
         Celula<E> sentinela = new Celula<>();
         frente = tras = sentinela;
         tamanho = 0;
-
     }
 
-    // Verifica se a lista está vazia.
     public boolean estaVazia() {
-        return (frente == tras);
+        return frente == tras;
     }
 
-    // Adiciona item na fila.
     public void enfileirar(E item) {
-        Celula<E> novaCelula = new Celula<E>(item);
+        Celula<E> novaCelula = new Celula<>(item);
         tras.setProximaCelula(novaCelula);
-        tras.getProximaCelula();
+        tras = novaCelula;
         tamanho++;
-
     }
 
-    // Adiciona item na fila.
     public E consultarPrimeiro() {
         if (estaVazia()) {
-            throw new NoSuchElementException("Nao há nenhum item na fila!");
+            throw new NoSuchElementException("Fila vazia!");
         }
-
         return frente.getProximaCelula().getItem();
     }
 
     public E desenfileirar() {
-        Celula<E> celulaRemovida;
-        E item;
+        if (estaVazia()) {
+            throw new NoSuchElementException("Fila vazia!");
+        }
 
-        celulaRemovida = frente.getProximaCelula();
-        frente.setProximaCelula(celulaRemovida.getProximaCelula()); // Atualiza referencia para pular a celula removida
+        Celula<E> celulaRemovida = frente.getProximaCelula();
+        E item = celulaRemovida.getItem();
+        frente.setProximaCelula(celulaRemovida.getProximaCelula());
 
-        celulaRemovida.setProximaCelula(null);
-
-        // Caso o item desenfileirado seja também o último da fila.
-        if (frente == tras) {
+        if (celulaRemovida == tras) {
             tras = frente;
         }
 
-        item = consultarPrimeiro();
-
+        celulaRemovida.setProximaCelula(null);
+        tamanho--;
         return item;
-
     }
 
-    
+    public void imprime() {
+        if (estaVazia()) {
+            System.out.println("⚠️ A fila está vazia.");
+            return;
+        }
 
+        System.out.println("\n--- Pacientes na Fila ---");
+        Celula<E> aux = frente.getProximaCelula();
+        int pos = 1;
+        while (aux != null) {
+            System.out.println(pos++ + ". " + aux.getItem());
+            aux = aux.getProximaCelula();
+        }
+    }
+
+    public int tamanho() {
+        return tamanho;
+    }
 }
