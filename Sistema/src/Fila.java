@@ -82,11 +82,11 @@ public class Fila<E> {
 
     }
 
-    public E buscarPeloNome(Predicate<E> condicional){
+    public E buscarPeloNome(Predicate<E> condicional) {
         Celula<E> aux = this.frente.getProximaCelula();
 
-        while(aux != null){
-            if(condicional.test(aux.getItem())){
+        while (aux != null) {
+            if (condicional.test(aux.getItem())) {
                 return aux.getItem();
             }
             aux = aux.getProximaCelula();
@@ -94,17 +94,17 @@ public class Fila<E> {
         return null;
     }
 
-    public Fila<E> filtrar(Predicate<E> condicional){
-        //Criar uma nova fila
+    public Fila<E> filtrar(Predicate<E> condicional) {
+        // Criar uma nova fila
         Fila<E> subFila = new Fila<>();
         Celula<E> aux = this.frente.getProximaCelula();
 
-        if(estaVazia()){
+        if (estaVazia()) {
             System.out.println("⚠️ A fila está vazia.");
         }
 
-        while(aux != null){
-            if(condicional.test(aux.getItem())){
+        while (aux != null) {
+            if (condicional.test(aux.getItem())) {
                 subFila.enfileirar(aux.getItem());
             }
             aux = aux.getProximaCelula();
@@ -112,7 +112,23 @@ public class Fila<E> {
 
         return subFila;
 
+    }
 
+    public void concatenar(Fila<E> fila) {
+
+        if (fila.estaVazia()) {
+            System.out.println("⚠️ A fila está vazia.");
+        }
+        if (this == fila) {
+            throw new IllegalArgumentException("Não é possível concatenar a fila com ela mesma.");
+        }
+
+        Celula<E> aux = fila.frente.getProximaCelula();
+
+        while (aux != null) {
+            enfileirar(aux.getItem());
+            aux = aux.getProximaCelula();
+        }
     }
 
     public int tamanho() {
