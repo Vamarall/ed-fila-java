@@ -13,7 +13,8 @@ public class App {
         System.out.println("1. Adicionar paciente");
         System.out.println("2. Listar fila");
         System.out.println("3. Atender próximo paciente");
-        System.out.println("4. Sair");
+        System.out.println("4. Buscar paciente por nome");
+        System.out.println("5. Sair");
         System.out.print("\nEscolha uma opção: ");
 
             int opcao = sc.nextInt();
@@ -46,6 +47,16 @@ public class App {
                     break;
 
                     case 2: filaDePacientes.imprime();
+                    break;
+
+                    case 3: filaDePacientes.desenfileirar();
+                    break;
+
+                    case 4: System.out.println("Digite o nome do paciente ");
+                    String nomeBusca = sc.nextLine();
+
+                    Paciente paciente = filaDePacientes.buscarPeloNome(x -> x.getNome().equalsIgnoreCase(nomeBusca));
+                    System.out.println(paciente);
                     break;
 
                 default:

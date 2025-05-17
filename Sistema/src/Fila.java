@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 public class Fila<E> {
     private Celula<E> frente;
@@ -60,6 +61,37 @@ public class Fila<E> {
             System.out.println(pos++ + ". " + aux.getItem());
             aux = aux.getProximaCelula();
         }
+    }
+
+    // Metodo que calcula quantos itens a frente do passado como parametro
+    public int quantosAFrente(E item) {
+
+        Celula<E> aux = this.frente.getProximaCelula();
+        int cont = 0;
+
+        while (aux != null) {
+            if (aux.getItem().equals(item)) {
+                return cont;
+            }
+            aux = aux.getProximaCelula();
+            cont++;
+        }
+
+        // Item nao encontrado
+        return -1;
+
+    }
+
+    public E buscarPeloNome(Predicate<E> condicional){
+        Celula<E> aux = this.frente.getProximaCelula();
+
+        while(aux != null){
+            if(condicional.test(aux.getItem())){
+                return aux.getItem();
+            }
+            aux = aux.getProximaCelula();
+        }
+        return null;
     }
 
     public int tamanho() {
