@@ -7,15 +7,16 @@ public class App {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-       System.out.println("\n==============================");
-        System.out.println("     SISTEMA DE ATENDIMENTO");
-        System.out.println("==============================");
-        System.out.println("1. Adicionar paciente");
-        System.out.println("2. Listar fila");
-        System.out.println("3. Atender próximo paciente");
-        System.out.println("4. Buscar paciente por nome");
-        System.out.println("5. Sair");
-        System.out.print("\nEscolha uma opção: ");
+            System.out.println("\n==============================");
+            System.out.println("     SISTEMA DE ATENDIMENTO");
+            System.out.println("==============================");
+            System.out.println("1. Adicionar paciente");
+            System.out.println("2. Listar fila");
+            System.out.println("3. Atender próximo paciente");
+            System.out.println("4. Ver quantos pacientes estão à frente de um nome");
+            System.out.println("5. Filtrar por prioridade");
+            System.out.println("5. Sair");
+            System.out.print("\nEscolha uma opção: ");
 
             int opcao = sc.nextInt();
             sc.nextLine();
@@ -46,17 +47,33 @@ public class App {
                     System.out.println("Paciente cadastrado com sucesso!");
                     break;
 
-                    case 2: filaDePacientes.imprime();
+                case 2:
+                    filaDePacientes.imprime();
                     break;
 
-                    case 3: filaDePacientes.desenfileirar();
+                case 3:
+                    filaDePacientes.desenfileirar();
                     break;
 
-                    case 4: System.out.println("Digite o nome do paciente ");
+                case 4:
+                    System.out.println("Digite o nome do paciente ");
                     String nomeBusca = sc.nextLine();
 
                     Paciente paciente = filaDePacientes.buscarPeloNome(x -> x.getNome().equalsIgnoreCase(nomeBusca));
-                    System.out.println(paciente);
+
+                    if (paciente != null) {
+                        int posicao = filaDePacientes.quantosAFrente(paciente);
+                        System.out.println("Há " + posicao + " paciente(s) à frente de " + nomeBusca + ".");
+                    } else {
+                        System.out.println("Paciente não encontrado.");
+                    }
+                    break;
+
+                    case 5:
+                    System.out.println("Digite o tipo de prioridade");
+                    Prioridade prioridade2 = Prioridade.valueOf(sc.nextLine().toUpperCase());
+                    Fila<Paciente> filaPrioridade = filaDePacientes.filtrar(x -> x.getPrioridade().equals(prioridade2));
+                    filaPrioridade.imprime();
                     break;
 
                 default:

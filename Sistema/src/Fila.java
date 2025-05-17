@@ -64,13 +64,13 @@ public class Fila<E> {
     }
 
     // Metodo que calcula quantos itens a frente do passado como parametro
-    public int quantosAFrente(E item) {
+    public int quantosAFrente(Paciente paciente) {
 
         Celula<E> aux = this.frente.getProximaCelula();
         int cont = 0;
 
         while (aux != null) {
-            if (aux.getItem().equals(item)) {
+            if (aux.getItem().equals(paciente)) {
                 return cont;
             }
             aux = aux.getProximaCelula();
@@ -92,6 +92,27 @@ public class Fila<E> {
             aux = aux.getProximaCelula();
         }
         return null;
+    }
+
+    public Fila<E> filtrar(Predicate<E> condicional){
+        //Criar uma nova fila
+        Fila<E> subFila = new Fila<>();
+        Celula<E> aux = this.frente.getProximaCelula();
+
+        if(estaVazia()){
+            System.out.println("⚠️ A fila está vazia.");
+        }
+
+        while(aux != null){
+            if(condicional.test(aux.getItem())){
+                subFila.enfileirar(aux.getItem());
+            }
+            aux = aux.getProximaCelula();
+        }
+
+        return subFila;
+
+
     }
 
     public int tamanho() {
