@@ -114,6 +114,8 @@ public class Fila<E> {
 
     }
 
+    // Capaz de concatenar, ao final da fila original, a fila passada como parâmetro
+    // para o método
     public void concatenar(Fila<E> fila) {
 
         if (fila.estaVazia()) {
@@ -129,6 +131,38 @@ public class Fila<E> {
             enfileirar(aux.getItem());
             aux = aux.getProximaCelula();
         }
+    }
+
+    // Capaz de criar e retornar uma cópia exata da fila
+    public Fila<E> copiar() {
+        if (estaVazia()) {
+            return null;
+        }
+        Fila<E> copiaFila = new Fila<>();
+        Celula<E> aux = this.frente.getProximaCelula();
+
+        while (aux != null) {
+            copiaFila.enfileirar(aux.getItem());
+            aux = aux.getProximaCelula();
+        }
+
+        return copiaFila;
+    }
+    // Verifica a existência, na fila, de item correspondente àquele que foi passado
+    // como parametro
+    public boolean verificaExistencia(E item) {
+        if (estaVazia()) {return false;}
+        Celula<E> aux = this.frente.getProximaCelula();
+
+        while (aux != null) {
+            if (aux.getItem().equals(item)) {
+                return true;
+            }
+            aux = aux.getProximaCelula();
+        }
+
+        return false;
+
     }
 
     public int tamanho() {
